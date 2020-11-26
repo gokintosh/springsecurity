@@ -15,11 +15,17 @@ public class StudentController {
 
 
     private static final List<Student> STUDENTS= Arrays.asList(
-            new Student
-    )
+            new Student(1,"James Bond"),
+            new Student(2,"Maria Jones"),
+            new Student(3,"Anna Smith")
+    );
 
     @GetMapping(path="{studentId}")
     public Student getStudent(@PathVariable("studentId")Integer studentId){
+        return STUDENTS.stream()
+                .filter(student -> studentId.equals(student.getStudentId()))
+                .findFirst()
+                .orElseThrow(()->new IllegalStateException("student"+studentId+"does not exists"));
 
     }
 
